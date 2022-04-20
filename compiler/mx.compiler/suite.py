@@ -172,6 +172,21 @@ suite = {
         },
       },
     },
+
+    # ------------- TornadoVM -------------
+
+    "uk.ac.manchester.tornado.drivers.common" : {
+      "path" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-drivers-common-0.14-dev.jar",
+      "sourcePath" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-drivers-common-0.14-dev.jar",
+      "optional" : False,
+    },
+
+    "uk.ac.manchester.tornado.api" : {
+      "path" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-api-0.14-dev.jar",
+      "sourcePath" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-api-0.14-dev.jar",
+      "optional" : False,
+    },
+
   },
 
   "projects" : {
@@ -562,6 +577,8 @@ suite = {
         "org.graalvm.compiler.replacements",
         "org.graalvm.compiler.printer",
         "org.graalvm.compiler.runtime",
+        "uk.ac.manchester.tornado.api",
+        "uk.ac.manchester.tornado.drivers.common",
       ],
 
       "checkstyle" : "org.graalvm.compiler.graph",
