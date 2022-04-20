@@ -75,6 +75,7 @@ import jdk.vm.ci.meta.SpeculationLog;
 import jdk.vm.ci.meta.TriState;
 import jdk.vm.ci.runtime.JVMCICompiler;
 import sun.misc.Unsafe;
+import uk.ac.manchester.tornado.drivers.common.TornadoVMCompiler;
 
 public class HotSpotGraalCompiler implements GraalJVMCICompiler, Cancellable, JVMCICompilerShadow {
 
@@ -235,6 +236,7 @@ public class HotSpotGraalCompiler implements GraalJVMCICompiler, Cancellable, JV
         result.setEntryBCI(entryBCI);
         boolean shouldDebugNonSafepoints = providers.getCodeCache().shouldDebugNonSafepoints();
         PhaseSuite<HighTierContext> graphBuilderSuite = configGraphBuilderSuite(providers.getSuites().getDefaultGraphBuilderSuite(), shouldDebugNonSafepoints, shouldRetainLocalVariables, isOSR);
+        TornadoVMCompiler.compileGraph(graph, method, providers, backend, graphBuilderSuite, optimisticOpts, profilingInfo, suites, lirSuites, result, crbf, true);
         GraalCompiler.compileGraph(graph, method, providers, backend, graphBuilderSuite, optimisticOpts, profilingInfo, suites, lirSuites, result, crbf, true);
 
         if (!isOSR && useProfilingInfo) {
