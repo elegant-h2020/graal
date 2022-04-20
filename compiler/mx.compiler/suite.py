@@ -1647,6 +1647,7 @@ suite = {
         "org.graalvm.compiler.truffle.options",
         "org.graalvm.compiler.core",
         "org.graalvm.compiler.replacements",
+        "uk.ac.manchester.tornado.drivers.common",
       ],
       "uses" : [
         "org.graalvm.compiler.truffle.compiler.substitutions.GraphBuilderInvocationPluginProvider",
