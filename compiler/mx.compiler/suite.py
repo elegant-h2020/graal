@@ -173,7 +173,7 @@ suite = {
       },
     },
     # ------------- TornadoVM -------------
-    "uk.ac.manchester.tornado.drivers.common" : {
+    "TORNADOVM" : {
       "path" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-drivers-common-0.13.jar",
       "sourcePath" : "/home/thanos/repositories/tornadoVM2/bin/sdk/share/java/tornado/tornado-drivers-common-0.13.jar",
       "sha1" : "6e63dd9beea4750e0b8d2158f689d1a946f667df",
@@ -566,7 +566,7 @@ suite = {
       "sourceDirs" : ["src"],
       "dependencies" : [
         "JVMCI_HOTSPOT",
-        "uk.ac.manchester.tornado.drivers.common",
+        "TORNADOVM",
         "org.graalvm.compiler.api.runtime",
         "org.graalvm.compiler.replacements",
         "org.graalvm.compiler.printer",
@@ -1635,6 +1635,7 @@ suite = {
       "subDir" : "src",
       "sourceDirs" : ["src"],
       "dependencies" : [
+        "TORNADOVM",
         "org.graalvm.compiler.truffle.common",
         "org.graalvm.compiler.truffle.options",
         "org.graalvm.compiler.core",
