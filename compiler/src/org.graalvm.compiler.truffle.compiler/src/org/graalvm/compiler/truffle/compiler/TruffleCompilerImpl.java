@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import jdk.vm.ci.meta.ResolvedJavaMethod;
 import org.graalvm.collections.EconomicMap;
 import org.graalvm.collections.Equivalence;
 import org.graalvm.compiler.api.replacements.SnippetReflectionProvider;
@@ -510,7 +511,9 @@ public abstract class TruffleCompilerImpl implements TruffleCompilerBase {
                     statistics.afterPartialEvaluation(request.compilable, request.graph);
                 }
             }
-
+            System.out.println("---------[TruffleCompilerImpl-compileAST] CodeAfterPartialEvaluation, compilable: " + compilable.getName());
+            // TODO Dump the IR graph
+            debug.dump(DebugContext.BASIC_LEVEL, graph, "CodeAfterPartialEvaluation");
             // Check if the task has been cancelled
             if (task.isCancelled()) {
                 return;
@@ -524,6 +527,7 @@ public abstract class TruffleCompilerImpl implements TruffleCompilerBase {
             // The Truffle compiler owns the last 2 characters of the compilation name, and uses
             // them to encode the compilation tier, so escaping the target name is not necessary.
             String compilationName = compilable.toString() + (task.isFirstTier() ? TruffleCompiler.FIRST_TIER_COMPILATION_SUFFIX : TruffleCompiler.SECOND_TIER_COMPILATION_SUFFIX);
+            System.out.println("---------[TruffleCompilerImpl-compileAST] compilePEGraph begins for compilationName: " + compilationName);
             CompilationResult compilationResult = compilePEGraph(graph, compilationName, graphBuilderSuite, compilable, asCompilationRequest(compilationId), listener, task);
             if (statistics != null) {
                 statistics.afterLowTier(compilable, graph);
@@ -535,6 +539,7 @@ public abstract class TruffleCompilerImpl implements TruffleCompilerBase {
             // Partial evaluation and installation are included in
             // compilation time and memory usage reported by printer
             printer.finish(compilationResult);
+            System.out.println("---------[TruffleCompilerImpl-compileAST] compilePEGraph finished");
         } catch (Throwable t) {
             if (t instanceof BailoutException) {
                 handleBailout(debug, graph, (BailoutException) t);
@@ -595,6 +600,7 @@ public abstract class TruffleCompilerImpl implements TruffleCompilerBase {
             LIRSuites selectedLirSuites = tier.lirSuites();
             Providers selectedProviders = tier.providers();
             CompilationResult compilationResult = createCompilationResult(name, graph.compilationId(), compilable);
+            System.out.println("[TruffleCompilerImpl-compilePEGraph] graph.method: " + graph.method().getName());
             TornadoVMCompiler.compileGraph(graph, graph.method(), selectedProviders, tier.backend(), graphBuilderSuite, Optimizations, graph.getProfilingInfo(), selectedSuites,
                     selectedLirSuites, compilationResult, CompilationResultBuilderFactory.Default, false);
             result = GraalCompiler.compileGraph(graph, graph.method(), selectedProviders, tier.backend(), graphBuilderSuite, Optimizations, graph.getProfilingInfo(), selectedSuites,
