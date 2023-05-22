@@ -1,57 +1,33 @@
 #include <iostream>
 
-int* compute(int(*f)(int), const int *input, const int size) {
-    int* output = (int *)malloc(size * sizeof(int));
-    for (int i = 0; i < size; i++) {
-        output[i] = f(input[i]);
+int* tornadoMap(int(*f)(int, int), const int *input) {
+    int* output = (int *)malloc(81000 * sizeof(int));
+    for (int i = 0; i < 81000; i++) {
+        output[i] = f(input[i], input[i]);
     }
-    return output; 
+    return output;
 }
 
 int main(int argc, char** argv) {
 
-    std::cout << "Hello\n";
-
-    auto f = [=](int i) {
-        std::cout << "Hello lambda\n";
-        return i;
-    };
-
-    auto result = f(3);
-
-
     // Example: vector function
-    const int size = 10;
-    int* input = (int *)malloc(size * sizeof(int));
-    int* output = (int *)malloc(size * sizeof(int));
+    const int size = 81000;
+    int *input = (int *) malloc(size * sizeof(int));
+    int *output = (int *) malloc(size * sizeof(int));
 
     for (int i = 0; i < size; i++) {
-        input[i] = i;
-    }
-
-    auto vectorFunction = [=](int *input, int *output, const int size) {
-        for (int i = 0; i < size; i++) {
-            output[i] = input[i] * 2;
-        }
-        return 0;
-    };
-
-    vectorFunction(input, output, size);
-
-    for (int i = 0; i < size; i++) {
-        std::cout << "Result: #" << i << " = " << output[i] << "\n";
+        input[i] = 2;
     }
 
     // Example of a map operator in C++
-    auto mapFunction = [](const int value) {
-        return value * 10;
+    auto mapFunction = [](const int value, const int value2) {
+        return value * 77 + value2;
     };
 
-    output = compute(mapFunction, input, size);
-
-    for (int i = 0; i < size; i++) {
-        std::cout << "Result: #" << i << " = " << output[i] << "\n";
+    for (int i = 0; i < 10000; i++) {
+//        output = tornadoMap(mapFunction, input, size);
+        output = tornadoMap(mapFunction, input);
     }
 
-
+    std::cout << "Result: #" << 0 << " = " << output[0] << "\n";
 }
